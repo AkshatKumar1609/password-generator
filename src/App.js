@@ -1,5 +1,6 @@
 import { use, useState } from 'react';
 import './App.css';
+import { ToastContainer, Zoom, toast } from 'react-toastify';
 
 function App() {
   let [uppercase,setUppercase] = useState(false);
@@ -24,13 +25,13 @@ function App() {
       setPassword(finalPass);
     }
     else{
-      alert('select one tickbox')
+      toast.error("Select atleast one option")
     }
   }
 
   function copyPass(){
     navigator.clipboard.writeText(password);
-    alert('password copied')
+    toast.success("Copied Successfully")
   }
 
   return (
@@ -89,6 +90,19 @@ function App() {
           Generate Password
         </button>
       </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover={false}
+        theme="colored"
+        transition={Zoom}
+      />
     </div>
   );
 }
