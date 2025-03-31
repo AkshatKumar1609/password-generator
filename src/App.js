@@ -1,4 +1,4 @@
-import { use, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import { ToastContainer, Zoom, toast } from 'react-toastify';
 
@@ -30,7 +30,23 @@ function App() {
   }
 
   function copyPass(){
-    navigator.clipboard.writeText(password);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(password);
+    } else {
+      const textArea = document.createElement("textarea");
+      textArea.value = password;
+      textArea.style.position = "fixed"; 
+      textArea.style.opacity = "0";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand("copy");
+      } catch (err) {
+        toast.error("Failed to copy");
+      }
+      document.body.removeChild(textArea);
+    }
     toast.success("Copied Successfully")
   }
 
